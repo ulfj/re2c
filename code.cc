@@ -291,7 +291,7 @@ void BitMap::gen(std::ostream &o, uint ind, uint lb, uint ub)
 {
 	if (first && bLastPass && bUsedYYBitmap)
 	{
-		o << indent(ind) << "static const unsigned char " << mapCodeName["yybm"] << "[] = {";
+		o << indent(ind) << "static const short " << mapCodeName["yybm"] << "[] = {";
 
 		uint c = 1, n = ub - lb;
 		const BitMap *cb = first;
@@ -692,7 +692,7 @@ void Accept::emit(std::ostream &o, uint ind, bool &readCh, const std::string&) c
 					o << indent(ind) << "case " << it->first << ": \t";
 					genGoTo(o, 0, state, it->second, readCh);
 				}
-			
+				o << indent(ind) << "default: break;\n";
 				o << indent(ind) << "}\n";
 			}
 		}
@@ -1773,7 +1773,7 @@ void DFA::emit(std::ostream &o, uint& ind, const RegExpMap* specMap, const std::
 			}
 			if (bUsedYYAccept)
 			{
-				o << indent(ind) << "unsigned int " << mapCodeName["yyaccept"] << " = 0;\n";
+				o << indent(ind) << "int " << mapCodeName["yyaccept"] << " = 0;\n";
 			}
 		}
 		else
